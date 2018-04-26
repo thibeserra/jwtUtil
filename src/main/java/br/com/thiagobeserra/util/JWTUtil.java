@@ -4,6 +4,7 @@ import java.security.Key;
 import java.util.Calendar;
 import java.util.Date;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,10 +18,10 @@ public abstract class JWTUtil {
 		return MacProvider.generateKey();
 	}
 	
-	public static String getToken(Key key) {
+	public static String getToken(Key key, String subject, Integer secondsToExpiration) {
 		String compactJWS = Jwts.builder()
-				.setSubject("maria.alves")
-				.setExpiration(timeToExpireToken(1))
+				.setSubject(subject)
+				.setExpiration(timeToExpireToken(secondsToExpiration))
 				.signWith(SignatureAlgorithm.HS256, key)
 				.compact();
 		
@@ -28,7 +29,7 @@ public abstract class JWTUtil {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public static Jwt deserializeToken(Key key, String token) {
+	public static Jwt decodeToken(Key key, String token) {
 		Jwt jwt = Jwts.parser().setSigningKey(key).parse(token);
 		
 		return jwt;
@@ -45,6 +46,11 @@ public abstract class JWTUtil {
 		currentDate.add(Calendar.SECOND, seconds);
 		
 		return currentDate.getTime();
+	}
+	
+	public static Claims getBodyClaimsToken(Key key, String token) throws SignatureException {
+		
+		return Jwts.parser().setSigningKey(key).parseClaimsJwt(token).getBody();
 	}
 
 }
