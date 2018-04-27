@@ -19,15 +19,15 @@ public class JWTUtilTest {
 		Key key2 = JWTUtil.getKey();
 		
 		//Gera token e assina com key gerada
-		String token = JWTUtil.getToken(key, "www.valecard.com.br", "maria.alves", 20);
+		String token = JWTUtil.getToken("Val3DracTtwJ", "www.valecard.com.br", "maria.alves", 20);
 		
 		System.out.println(token);
 		
 		//verifica se assinatura do token é valida para a key - true
 		try {
-			JWTUtil.validateSignatureToken(key2, token);
+			JWTUtil.validateSignatureToken("Val3DracTtwj", token);
 			//Verifica se getSubject do token é valido
-			System.out.println(Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getIssuer().equals("www.valecard.com.br"));
+			//System.out.println(Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getIssuer().equals("www.valecard.com.br"));
 			
 		} catch(SignatureException e) {
 			System.out.println("T1: Assinatura do Token Inválido!");

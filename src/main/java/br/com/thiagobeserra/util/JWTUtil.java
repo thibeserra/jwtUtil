@@ -28,7 +28,7 @@ public abstract class JWTUtil {
 	 * @param secondsToExpiration
 	 * @return
 	 */
-	public static String getToken(Key key, String issuer, String subject, Integer secondsToExpiration) {
+	public static String getToken(String key, String issuer, String subject, Integer secondsToExpiration) {
 		String compactJWS = Jwts.builder()
 				.setIssuer(issuer)
 				.setSubject(subject)
@@ -45,7 +45,7 @@ public abstract class JWTUtil {
 	 * @param token
 	 * @throws SignatureException
 	 */
-	public static void validateSignatureToken(Key key, String token) throws SignatureException, ExpiredJwtException {
+	public static void validateSignatureToken(String key, String token) throws SignatureException, ExpiredJwtException {
 		Jwts.parser().setSigningKey(key).parseClaimsJws(token);
 	}
 	
