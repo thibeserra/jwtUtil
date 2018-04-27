@@ -25,9 +25,9 @@ public class JWTUtilTest {
 		
 		//verifica se assinatura do token é valida para a key - true
 		try {
-			JWTUtil.validateSignatureToken("Val3DracTtwj", token);
+			JWTUtil.validateSignatureToken("Val3DracTtwJ", token);
 			//Verifica se getSubject do token é valido
-			//System.out.println(Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getIssuer().equals("www.valecard.com.br"));
+			System.out.println(Jwts.parser().setSigningKey("Val3DracTtwJ").parseClaimsJws(token).getBody().getIssuer().equals("www.valecard.com.br"));
 			
 		} catch(SignatureException e) {
 			System.out.println("T1: Assinatura do Token Inválido!");
